@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/model/todo.dart';
 import 'package:todoapp/page/edit_todo_page.dart';
 import 'package:todoapp/provider/todos.dart';
-
-import '../utils.dart';
+import 'package:todoapp/utils.dart';
 
 class TodoWidget extends StatelessWidget {
   final Todo todo;
@@ -42,8 +41,8 @@ class TodoWidget extends StatelessWidget {
       );
 
   Widget buildTodo(BuildContext context) => GestureDetector(
-    onTap: ()=>editTodo(context, todo),
-    child: Container(
+        onTap: () => editTodo(context, todo),
+        child: Container(
           color: Colors.white,
           padding: EdgeInsets.all(20),
           child: Row(
@@ -56,8 +55,11 @@ class TodoWidget extends StatelessWidget {
                   final provider =
                       Provider.of<TodosProvider>(context, listen: false);
                   final isDone = provider.toggleTodoStatus(todo);
-                  Utils.showSnackBar(context,
-                      isDone ? 'Task is Completed!' : 'Task marked Incomplete');
+
+                  Utils.showSnackBar(
+                    context,
+                    isDone ? 'Task completed' : 'Task marked incomplete',
+                  );
                 },
               ),
               const SizedBox(width: 20),
@@ -87,12 +89,13 @@ class TodoWidget extends StatelessWidget {
             ],
           ),
         ),
-  );
+      );
+
   void deleteTodo(BuildContext context, Todo todo) {
     final provider = Provider.of<TodosProvider>(context, listen: false);
     provider.removeTodo(todo);
 
-    Utils.showSnackBar(context, 'Deleted The Task');
+    Utils.showSnackBar(context, 'Deleted the task');
   }
 
   void editTodo(BuildContext context, Todo todo) => Navigator.of(context).push(

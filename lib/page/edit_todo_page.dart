@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/model/todo.dart';
@@ -7,6 +6,7 @@ import 'package:todoapp/widget/todo_form_widget.dart';
 
 class EditTodoPage extends StatefulWidget {
   final Todo todo;
+
   const EditTodoPage({Key key, @required this.todo}) : super(key: key);
 
   @override
@@ -14,7 +14,7 @@ class EditTodoPage extends StatefulWidget {
 }
 
 class _EditTodoPageState extends State<EditTodoPage> {
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   String title;
   String description;
@@ -33,19 +33,21 @@ class _EditTodoPageState extends State<EditTodoPage> {
           title: Text('Edit Todo'),
           actions: [
             IconButton(
-                onPressed: () {
-                  final provider =
-                      Provider.of<TodosProvider>(context, listen: false);
-                  provider.removeTodo(widget.todo);
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(Icons.delete)),
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                final provider =
+                    Provider.of<TodosProvider>(context, listen: false);
+                provider.removeTodo(widget.todo);
+
+                Navigator.of(context).pop();
+              },
+            )
           ],
         ),
         body: Padding(
           padding: EdgeInsets.all(16),
           child: Form(
-            key: _formkey,
+            key: _formKey,
             child: TodoFormWidget(
               title: title,
               description: description,
@@ -57,12 +59,15 @@ class _EditTodoPageState extends State<EditTodoPage> {
           ),
         ),
       );
+
   void saveTodo() {
-    final isValid = _formkey.currentState.validate();
+    final isValid = _formKey.currentState.validate();
+
     if (!isValid) {
       return;
     } else {
       final provider = Provider.of<TodosProvider>(context, listen: false);
+
       provider.updateTodo(widget.todo, title, description);
 
       Navigator.of(context).pop();

@@ -24,7 +24,7 @@ class TodoFormWidget extends StatelessWidget {
             buildTitle(),
             SizedBox(height: 8),
             buildDescription(),
-            SizedBox(height: 32),
+            SizedBox(height: 16),
             buildButton(),
           ],
         ),
